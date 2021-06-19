@@ -138,7 +138,7 @@ class GitRepo {
 	protected $repo_path = null;
 	protected $bare = false;
 	protected $envopts = array();
-	protected ?\action_plugin_gitbacked_editcommit $plugin = null;
+	protected $plugin = null;
 
 	/**
 	 * Create a new git repository
@@ -152,7 +152,7 @@ class GitRepo {
 	 * @param   string  reference path
 	 * @return  GitRepo  or null in case of an error
 	 */
-	public static function &create_new($repo_path, \action_plugin_gitbacked_editcommit $plugin = null, $source = null, $remote_source = false, $reference = null) {
+	public static function &create_new($repo_path, $plugin = null, $source = null, $remote_source = false, $reference = null) {
 		if (is_dir($repo_path) && file_exists($repo_path."/.git") && is_dir($repo_path."/.git")) {
 			throw new Exception(self::handle_create_new_error($repo_path, $reference, '"'.$repo_path.'" is already a git repository', $plugin));
 		} else {
@@ -187,7 +187,7 @@ class GitRepo {
 	 * @param   bool    create if not exists?
 	 * @return  void
 	 */
-	public function __construct($repo_path = null, \action_plugin_gitbacked_editcommit $plugin = null, $create_new = false, $_init = true) {
+	public function __construct($repo_path = null, $plugin = null, $create_new = false, $_init = true) {
 		$this->plugin = $plugin;
 		if (is_string($repo_path)) {
 			$this->set_repo_path($repo_path, $create_new, $_init);
